@@ -1,0 +1,48 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var timer = null;
+    var btn = document.getElementById("btn");
+    var yt = document.getElementById("yt");
+
+    if (!btn || !yt) {
+      console.error("لم يتم العثور على الزر أو مكان تشغيل الأغنية");
+      return;
+    }
+
+    function spawn() {
+      var h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = ["💖", "💗", "💕", "❤️", "🌸"][
+        Math.floor(Math.random() * 5)
+      ];
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = 4 + Math.random() * 4 + "s";
+      document.body.appendChild(h);
+
+      setTimeout(function () {
+        h.remove();
+      }, 8500);
+    }
+
+    btn.addEventListener("click", function () {
+      document.body.classList.add("show");
+
+      if (!yt.querySelector("iframe")) {
+        var video = document.createElement("iframe");
+
+        video.src =
+          "https://www.youtube.com/embed/N_yoNLFGthk?autoplay=1&loop=1&playlist=N_yoNLFGthk&playsinline=1";
+
+        video.allow = "autoplay; encrypted-media; picture-in-picture";
+        video.style.cssText =
+          "position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;";
+
+        yt.appendChild(video);
+      }
+
+      if (!timer) {
+        timer = setInterval(spawn, 350);
+      }
+    });
+  });
+</script>
